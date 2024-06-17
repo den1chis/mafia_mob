@@ -1,9 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.conf import settings
-
-class CustomUser(AbstractUser):
-    pass  # Исходная модель без поля balance
+from django.contrib.auth.models import User  # Используйте стандартную модель пользователя
 
 class Game(models.Model):
     name = models.CharField(max_length=100)
@@ -11,7 +7,7 @@ class Game(models.Model):
     is_active = models.BooleanField(default=True)
 
 class Player(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Используйте стандартную модель пользователя
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     role = models.CharField(max_length=50)
     is_alive = models.BooleanField(default=True)

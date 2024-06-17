@@ -65,20 +65,6 @@ button {
     max-width: 250px;
 }
 
-/* Стили для кнопок на главном экране */
-.book-now-btn, .login-btn {
-    width: 200px; /* Задаем одинаковую ширину для обеих кнопок */
-    height: 50px; /* Задаем одинаковую высоту для обеих кнопок */
-    margin: 10px; /* Задаем отступы для обеих кнопок */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px; /* Размер текста */
-    border-radius: 25px; /* Скругленные углы */
-    border: none; /* Без границы */
-    cursor: pointer; /* Указатель мыши в виде руки */
-}
-
 .book-now-btn {
     background-color: #ff0;
 }

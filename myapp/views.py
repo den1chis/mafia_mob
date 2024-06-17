@@ -1,22 +1,8 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
+from .forms import UserRegisterForm, UserLoginForm, CustomUserCreationForm
 from django.contrib import messages
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserLoginForm, EditProfileForm, ChangePasswordForm, CustomUserCreationForm
-from .models import Player
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-from django.contrib import messages
-
-CustomUser = get_user_model()
-
 
 def home(request):
     return render(request, 'home.html')
@@ -42,6 +28,10 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect('profile')
+            else:
+                messages.error(request, 'Invalid username or password')
+        else:
+            messages.error(request, 'Invalid username or password')
     else:
         form = UserLoginForm()
     return render(request, 'login.html', {'form': form})
@@ -55,7 +45,7 @@ def profile(request):
 def edit_profile(request):
     user = request.user
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=user)
+        form = CustomUserCreationForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile was successfully updated!')
@@ -63,9 +53,9 @@ def edit_profile(request):
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = CustomUserChangeForm(instance=user)
+        form = CustomUserCreationForm(instance=user)
     return render(request, 'edit_profile.html', {'form': form})
+
 def logout_view(request):
     logout(request)
     return redirect('home')
-

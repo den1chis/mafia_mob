@@ -3,10 +3,6 @@
 
 {% block title %}Profile{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
-{% endblock %}
-
 {% block content %}
 <section class="vh-100">
     <div class="container py-5 h-100">
@@ -20,8 +16,8 @@
                                      class="rounded-circle img-fluid profile-picture" style="width: 150px;" />
                             </a>
                         </div>
-                        <h2 class="mb-2">{{ user.username }}</h2>
-                        <button type="button" class="btn btn-gold btn-rounded btn-lg">
+                        <h2 class="mb-2" style="color: gold;">{{ user.username }}</h2>
+                        <button type="button" class="btn btn-gold btn-rounded btn-lg" style="background-color: gold; color: white;">
                             Game
                         </button>
                         <button type="button" class="btn btn-white btn-rounded btn-lg mt-3" onclick="location.href='{% url 'logout' %}'">

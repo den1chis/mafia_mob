@@ -1,24 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Screen</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-</head>
+{% extends 'base.html' %}
+{% load static %}
 
+{% block title %}Main Screen{% endblock %}
 
-<body>
-    <div class="container">
-        <div class="background"></div>
-        <div class="content">
-            <img src="{% static 'images/maf_main.png' %}" alt="Your Image" class="logo">
-            <div class="buttons">
-                <button class="book-now-btn">Book now</button>
-                <a href="{% url 'login' %}"><button class="login-btn">Log in</button></a>
-            </div>
+{% block content %}
+<div class="container">
+    <div class="background"></div>
+    <div class="content">
+        <img src="{% static 'images/maf_main.png' %}" alt="Logo" class="logo">
+        <div class="buttons">
+            <button class="book-now-btn" onclick="location.href='{% url 'register' %}'">Book Now</button>
+            <button class="login-btn" onclick="location.href='{% url 'login' %}'">Login</button>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
