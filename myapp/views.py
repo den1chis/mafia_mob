@@ -39,7 +39,10 @@ def login_view(request):
 @login_required
 def profile(request):
     user = request.user
-    return render(request, 'profile.html', {'user': user})
+    if user.is_staff:  # Проверка на администратора
+        return render(request, 'admin_profile.html', {'user': user})
+    else:
+        return render(request, 'profile.html', {'user': user})
 
 @login_required
 def edit_profile(request):
@@ -59,3 +62,35 @@ def edit_profile(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+@login_required
+def manage_balance(request):
+    return render(request, 'manage_balance.html')
+
+@login_required
+def deposit(request):
+    return render(request, 'deposit.html')
+
+@login_required
+def withdraw(request):
+    return render(request, 'withdraw.html')
+
+@login_required
+def transaction_history(request):
+    return render(request, 'transaction_history.html')
+
+@login_required
+def create_game(request):
+    # Представление для создания игр администратором
+    if not request.user.is_staff:
+        return redirect('profile')
+    # Логика создания игры здесь
+    return render(request, 'create_game.html')
+
+@login_required
+def monitor_games(request):
+    # Представление для мониторинга игр администратором
+    if not request.user.is_staff:
+        return redirect('profile')
+    # Логика мониторинга игр здесь
+    return render(request, 'monitor_games.html')

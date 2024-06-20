@@ -10,4 +10,8 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),  # Маршрут для профиля
     path('logout/', views.logout_view, name='logout'),  # Маршрут для выхода из аккаунта
     path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('manage_balance/', views.manage_balance, name='manage_balance'),
+    path('create_game/', views.create_game, name='create_game'),
+    path('monitor_games/', views.monitor_games, name='monitor_games'),
+    
 ]

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Balance{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <h1 class="mb-4">Manage Balance</h1>
+            <button class="btn btn-success btn-lg mb-3" onclick="location.href='#'">Пополнение</button>
+            <button class="btn btn-danger btn-lg mb-3" onclick="location.href='#'">Вывод</button>
+            <button class="btn btn-info btn-lg mb-3" onclick="location.href='#'">История</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

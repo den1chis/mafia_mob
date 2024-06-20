@@ -1,10 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
-from .models import CustomUser  # Импортируем нашу пользовательскую модель
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
-        model = CustomUser  # Используем CustomUser
+        model = CustomUser
         fields = ('username', 'email')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
@@ -15,7 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
 
 class UserRegisterForm(CustomUserCreationForm):
     class Meta(CustomUserCreationForm.Meta):
-        model = CustomUser  # Используем CustomUser
+        model = CustomUser
         fields = ('username', 'email', 'password1', 'password2')
 
 class UserLoginForm(AuthenticationForm):

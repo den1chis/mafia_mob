@@ -1,13 +1,6 @@
 from django.contrib import admin
-from .models import Game, Player
-
-
-
-admin.site.register(Game)
-admin.site.register(Player)
-from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
+from .models import CustomUser, Game, Player
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
@@ -16,3 +9,5 @@ class CustomUserAdmin(UserAdmin):
     )
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Game)
+admin.site.register(Player)
