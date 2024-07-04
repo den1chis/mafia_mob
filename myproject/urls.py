@@ -21,4 +21,6 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
     path('upload_photo/', views.upload_photo, name='upload_photo'),
     path('create_game/', views.create_game, name='create_game'),
+
+    path('chat/', views.chat, name='chat'),
 ]           

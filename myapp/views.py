@@ -188,3 +188,7 @@ def create_game(request):
     else:
         form = GameCreationForm()
     return render(request, 'create_game.html', {'form': form})
+
+
+def chat(request):
+    return render(request, 'chat.html')
