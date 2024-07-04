@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Game{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="content text-center">
+        <h1>Create Game</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_country" class="sr-only">Country</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                    </div>
+                    {{ form.country }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_city" class="sr-only">City</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                    </div>
+                    {{ form.city }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_num_players" class="sr-only">Number of Players</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-users"></i></span>
+                    </div>
+                    {{ form.num_players }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_game_amount" class="sr-only">Game Amount</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                    </div>
+                    {{ form.game_amount }}
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" id="gameLink" onclick="copyGameLink()" value="Copy Link" readonly class="form-control mb-3 text-center">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success mb-2">Pay</button>
+            <button type="button" class="btn btn-primary mb-2">Play</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function copyGameLink() {
+    var copyText = document.getElementById("gameLink");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+    document.execCommand("copy");
+    alert("Link copied: " + copyText.value);
+}
+</script>
+
+{% endblock %}

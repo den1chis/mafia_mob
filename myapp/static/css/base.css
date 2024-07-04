@@ -89,6 +89,8 @@ button {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
+
+
 .input-field::placeholder {
     color: #ccc;
 }
@@ -108,3 +110,4 @@ button {
 .form-group {
     margin-bottom: 20px;
 }
+

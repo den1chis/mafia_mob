@@ -80,6 +80,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'dddaddda92@mail.ru'
+EMAIL_HOST_PASSWORD = 'gaVEffccpZX9rZzK8zhE'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

@@ -1,8 +1,22 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
-from .forms import UserRegisterForm, UserLoginForm, CustomUserCreationForm
+from .forms import UserRegisterForm, UserLoginForm, CustomUserCreationForm, PasswordResetRequestForm, PhotoUploadForm, GameCreationForm
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
+
+from PIL import Image
+from PIL.ExifTags import TAGS, GPSTAGS
+
+import random
+import string
 
 def home(request):
     return render(request, 'home.html')
@@ -94,3 +108,83 @@ def monitor_games(request):
         return redirect('profile')
     # Логика мониторинга игр здесь
     return render(request, 'monitor_games.html')
+
+
+def generate_random_password(length=8):
+    letters_and_digits = string.ascii_letters + string.digits
+    return ''.join(random.choice(letters_and_digits) for i in range(length))
+
+def password_reset_request(request):
+    if request.method == 'POST':
+        form = PasswordResetRequestForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                user = User.objects.get(email=email)
+                new_password = generate_random_password()
+                user.password = make_password(new_password)
+                user.save()
+                send_mail(
+                    'Password Reset Request',
+                    f'Your new password is: {new_password}',
+                    'your-email@mail.ru',
+                    [email],
+                    fail_silently=False,
+                )
+                return redirect('password_reset_done')
+            except User.DoesNotExist:
+                form.add_error('email', 'Email address not found')
+    else:
+        form = PasswordResetRequestForm()
+    return render(request, 'registration/password_reset_form.html', {'form': form})
+
+
+def get_exif_data(image):
+    exif_data = {}
+    try:
+        info = image._getexif()
+        if info:
+            for tag, value in info.items():
+                tag_name = TAGS.get(tag, tag)
+                if tag_name == "GPSInfo":
+                    gps_data = {}
+                    for gps_tag in value:
+                        sub_tag = GPSTAGS.get(gps_tag, gps_tag)
+                        gps_data[sub_tag] = value[gps_tag]
+                    exif_data[tag_name] = gps_data
+                else:
+                    exif_data[tag_name] = value
+    except AttributeError:
+        pass
+    return exif_data
+
+@login_required
+def upload_photo(request):
+    if request.method == 'POST':
+        form = PhotoUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.cleaned_data['image']
+            image_instance = Image.open(image)
+            exif_data = get_exif_data(image_instance)
+            gps_info = exif_data.get('GPSInfo')
+            if gps_info:
+                latitude = gps_info.get('GPSLatitude')
+                longitude = gps_info.get('GPSLongitude')
+                # Обработка данных GPS здесь
+            # Сохранение изображения и данных здесь
+            return redirect('profile')
+    else:
+        form = PhotoUploadForm()
+    return render(request, 'upload_photo.html', {'form': form})
+
+@login_required
+def create_game(request):
+    if request.method == 'POST':
+        form = GameCreationForm(request.POST)
+        if form.is_valid():
+            # Сохранение данных игры и генерация ссылки
+            game_link = "http://example.com/game/12345"  # Пример ссылки на игру
+            return render(request, 'game_created.html', {'game_link': game_link})
+    else:
+        form = GameCreationForm()
+    return render(request, 'create_game.html', {'form': form})
